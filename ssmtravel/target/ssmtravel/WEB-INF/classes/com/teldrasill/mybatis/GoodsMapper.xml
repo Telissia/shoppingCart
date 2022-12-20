@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teldrasill.dao.GoodsDao">
+
+    <insert id="addGoods" parameterType="Goods">
+        insert into shopping.goodstable (gname, goodstype_id, gpicture, grprice, goprice, gstore)
+        values (#{gname}, #{goodstype_id}, #{gpicture}, #{grprice}, #{goprice}, #{gstore});
+    </insert>
+
+    <delete id="deleteAGoods" parameterType="Integer">
+        delete
+        from shopping.goodstable
+        where id = #{id};
+    </delete>
+
+    <update id="updateGoodsById" parameterType="Goods">
+        update shopping.goodstable
+        set gname = #{gname}, goodstype_id = #{goodstype_id}, gpicture = #{gpicture}, grprice = #{grprice}, goprice = #{goprice}, gstore = #{gstore}
+        where id = #{id};
+    </update>
+
+    <select id="queryGoodsById" resultType="Goods">
+        select *
+        from shopping.goodstable
+        where id = #{id};
+    </select>
+
+    <select id="queryAllGoods" resultType="Goods">
+        select *
+        from shopping.goodstable;
+    </select>
+
+    <select id="selectAllGoodsByPage"  resultType="Goods" parameterType="map">
+        select * from shopping.goodstable order by id limit #{startIndex}, #{perPageSize}
+    </select>
+</mapper>

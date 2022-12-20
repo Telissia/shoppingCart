@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teldrasill.dao.IndexDao">
+    <!-- 首页搜索 -->
+    <select id="search" resultType="Goods" parameterType="String">
+        select gt.*, gy.typename from shopping.goodstable gt,shopping.goodstype gy where gt.goodstype_id = gy.id
+                                                                   and gt.gname like concat(#{mykey},'%')
+    </select>
+</mapper>

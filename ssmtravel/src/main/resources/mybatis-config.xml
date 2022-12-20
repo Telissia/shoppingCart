@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+        <package name="com.teldrasill.pojo"/>
+    </typeAliases>
+
+    <!-- 尝试 mapper resources -->
+    <mappers>
+        <mapper resource="com/teldrasill/mybatis/GoodsMapper.xml"></mapper>
+        <mapper resource="com/teldrasill/mybatis/CartMapper.xml"></mapper>
+        <mapper resource="com/teldrasill/mybatis/UserMapper.xml"></mapper>
+        <mapper resource="com/teldrasill/mybatis/IndexMapper.xml"></mapper>
+        <mapper resource="com/teldrasill/mybatis/OrderMapper.xml"></mapper>
+    </mappers>
+</configuration>
