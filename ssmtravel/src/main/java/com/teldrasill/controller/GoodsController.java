@@ -2,11 +2,15 @@ package com.teldrasill.controller;
 
 import com.teldrasill.pojo.Goods;
 import com.teldrasill.service.GoodsService;
+import com.teldrasill.util.MyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,11 +61,49 @@ public class GoodsController
 
     //添加商品的请求
     @RequestMapping("/addGoods")
-    public String AddGoods(Goods goods)
+    public String AddGoods(Goods goods, Model model, HttpServletRequest request) throws IOException
     {
+
+        //防止文件产生重复，错误覆盖
+        //文件新名
+        String newfileName = "";
+        //得到上传原本文件名
+        String fileName = goods.getLogoImage().getOriginalFilename();
+        if(fileName.length() > 0)
+        {
+            //得到文件扩展名
+            String fileType = fileName.substring(fileName.indexOf("."));//.jpg
+            //赋值新文件名
+            newfileName = MyUtil.getStringID() + fileType;
+
+            goods.setGpicture(newfileName);//只读写文件名，再去找文件
+            String realPath = "D:\\Environment\\idea\\Logos";
+            //String realPath = request.getServletContext().getRealPath("logos");
+            System.out.println(realPath);
+            File targetFile = new File(realPath, newfileName);
+            if(!targetFile.exists())
+            {
+                targetFile.mkdirs();
+                //创建多级目录
+            }
+            try {
+                goods.getLogoImage().transferTo(targetFile);
+            } catch (IllegalStateException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
         System.out.println("addgoods>=" + goods);
         goodsService.addGoods(goods);
         return "redirect:/goods/allGoods";
         //请求复用，重定向请求到allGoods
+    }
+
+    @RequestMapping("/selectAGoods")
+    public String selectAGoods(Model model, Integer id){
+        Goods goods = goodsService.queryGoodsById(id);
+        model.addAttribute("goods",goods);
+        return "goodsDetail";
     }
 }

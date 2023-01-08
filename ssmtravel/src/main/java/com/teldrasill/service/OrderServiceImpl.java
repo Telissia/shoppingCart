@@ -22,7 +22,8 @@ public class OrderServiceImpl implements OrderService
 
 
     @Override
-    public String orderSubmit(Model model, HttpSession session, Double amount) {
+    public String orderSubmit(Model model, HttpSession session, Double amount)
+    {
         List<Map<String, Object>> list = orderDao.selectGoodsShop(MyUtil.getUserId(session));
         Order order = new Order();
         order.setAmount(amount);
@@ -47,7 +48,8 @@ public class OrderServiceImpl implements OrderService
     }
 
     @Override
-    public String pay(Integer ordersn) {
+    public String pay(Integer ordersn)
+    {
         orderDao.pay(ordersn);
         return "before/paydone";
     }

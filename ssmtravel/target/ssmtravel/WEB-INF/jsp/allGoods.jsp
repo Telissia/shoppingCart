@@ -7,14 +7,45 @@
     <title>Goods List</title>
 
     <meta name="Keywords" content="">
-
+    <script src="${pageContext.request.contextPath }/static/js/Management/cart.js" ></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath }/static/bootstrap-4.6.1-dist/css/bootstrap.min.css">
     <script type="text/javascript">
-        function goCart() {
-            document.putcartform.submit();
+        function goCart()
+        {
+            var num = document.getElementById("SNUM").value;
+            if (!(/(^[1-9]\d*$)/.test(num)))
+            {
+                alert("请输入正整数！！！")
+                alert(num)
+            }
+            else
+            {
+                document.putcartform.submit();
+            }
         }
         function clearValue(){
             document.myForm.mykey.value = "";
+        }
+        function postCart()
+        {
+            var xhr = new XMLHttpRequest();
+            var url = "url";
+            var tableId = document.getElementById("tab");
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    console.log(json.Goods_Name + ", " + json.Goods_Price);
+                }
+            };
+            for (var i = 1; i < tableId.rows.length; i++)
+            {
+                var content1 = tableId.rows[i].ceil(1).innerHTML;
+                var content2 = tableId.rows[i].ceil(2).innerHTML;
+                var data = JSON.stringify({"Goods_Name": content1, "Goods_Price": content2});
+                xhr.send(data);
+            }
         }
     </script>
 
@@ -44,7 +75,7 @@
             <div class="col-md-8 flex-column">
                 <h1>
                     <small>Query Cart
-                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/cart/selectCart">Query Cart</a>
+                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/cart/selectCart" target="_blank">Query Cart</a>
                     </small>
                 </h1>
             </div>
@@ -63,7 +94,7 @@
             <div class="col-md-8 flex-column">
                 <ul>
                     <li>
-                        <a href="${pageContext.request.contextPath}/user/register">register</a>
+                        <a href="${pageContext.request.contextPath}/index/toRegister">register</a>
                     </li>
                 </ul>
                 <ul>
@@ -85,7 +116,7 @@
             </div>
             <div class="card-body">
                 <form action="${pageContext.request.contextPath}/cart/putCart" name="putcartform" method="post">
-                <table class="table">
+                <table class="table" id="tab">
                     <thead>
                     <tr>
                         <th scope="col">Goods_ID</th>
@@ -103,12 +134,12 @@
                             <td>${goods.gname }</td>
                             <td>${goods.grprice }</td>
                             <td>${goods.gstore }</td>
-                            <td><a href="#">GoodsDetails</a></td>
+                            <td><a href="${pageContext.request.contextPath}/goods/selectAGoods?id=${goods.id }" target="_blank">GoodsDetails</a></td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/cart/putCart" name="putcartform" method="post">
                                     <input type="hidden" name="id" value="${goods.id }"/>
-                                    <input type="text" name="shoppingnum" size="3"/>
-                                    <button type="submit">Add it to Cart</button>
+                                    <input type="text" name="shoppingnum" size="3" id="SNUM" value="1"/>
+                                    <button type="submit" class="btn-primary" onclick="goCart()">Add it to Cart</button>
                                 </form>
                             </td>
                         </tr>

@@ -1,12 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath }/static/bootstrap-4.6.1-dist/css/bootstrap.min.css">
     <script type="text/javascript">
+        function testNumber()
+        {
+            var num = document.getElementById("IRS").value;
+            if (!(/(^[1-9]\d*$)/.test(num)))
+            {
+                alert("请输入正整数！！！")
+            }
+            else
+            {
+                document.updatecartform.submit();
+            }
+        }
         //确认
         function  goOrderConfirm(){
             window.location.href="/ssmtravel_war/cart/orderConfirm";
@@ -40,13 +52,13 @@
                         <td>${ce.grprice}</td>
                         <td>${ce.shoppingnum }</td>
                         <td>${ce.smallsum }</td>
-                        <td><a href="#">GoodsDetails</a></td>
+                        <td><a href="${pageContext.request.contextPath}/goods/selectAGoods?id=${ce.id }">GoodsDetails</a></td>
                         <td>
-                            <form action="${pageContext.request.contextPath}/cart/deleteAgoods" method="post">
+                            <form action="${pageContext.request.contextPath}/cart/deleteAgoods" method="post" name="updatecartform">
                                 <input type="hidden" name="id" value="${ce.id }"/>
                                 <input type="hidden" name="shoppingnum" value="${ce.shoppingnum }">
-                                <input type="number" name="reshoppingnum">
-                                <button type="submit" class="btn-primary">update the cart</button>
+                                <input type="number" name="reshoppingnum" id="IRS">
+                                <img src="${pageContext.request.contextPath }/static/images/cart-1.svg"  height="50" style="cursor: pointer" onclick="testNumber()">
                             </form>
                         </td>
                     </tr>

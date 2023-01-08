@@ -10,7 +10,7 @@
 <body>
 
 <div class="container">
-    <form action="${pageContext.request.contextPath}/user/register" method="post">
+    <form action="${pageContext.request.contextPath}/user/register" method="post" modelAttribute="buser">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" name="bemail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">

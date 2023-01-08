@@ -22,6 +22,11 @@ public class IndexController
         return indexService.toLogin(model);
     }
 
+    @RequestMapping("/toRegister")
+    public String toRegister(Model model) {
+        return indexService.toRegister(model);
+    }
+
     @RequestMapping("/search")
     public String search(Model model, String mykey) {
         List<Goods> list = indexService.search(mykey);

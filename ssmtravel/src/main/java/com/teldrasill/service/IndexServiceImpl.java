@@ -18,6 +18,12 @@ public class IndexServiceImpl implements IndexService
     IndexDao indexDao;
 
     @Override
+    public String toRegister(Model model) {
+        model.addAttribute("rbuser", new Buser());
+        return "register";
+    }
+
+    @Override
     public String toLogin(Model model)
     {
         model.addAttribute("lbuser", new Buser());

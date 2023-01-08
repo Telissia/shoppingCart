@@ -33,6 +33,7 @@ public class UserController
     @RequestMapping("/login")
     public String login(@ModelAttribute Buser buser, Model model, HttpSession session) {
         Buser ruser = null;
+        buser.setBpwd(DigestUtil.sha256Hex(buser.getBpwd()));
         List<Buser> list = userService.login(buser, model, session);
         if(list.size() > 0)
         {

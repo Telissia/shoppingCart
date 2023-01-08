@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IndexService
 {
+    public String toRegister(Model model);
     public String toLogin(Model model);
     public List<Goods> search(String mykey);
 }

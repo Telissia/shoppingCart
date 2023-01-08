@@ -22,9 +22,9 @@
     </update>
 
     <select id="queryGoodsById" resultType="Goods">
-        select *
-        from shopping.goodstable
-        where id = #{id};
+        select gt.*, gy.typename
+        from shopping.goodstable gt, shopping.goodstype gy
+        where gt.id=#{id} and gt.goodstype_id = gy.id;
     </select>
 
     <select id="queryAllGoods" resultType="Goods">

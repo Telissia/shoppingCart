@@ -15,5 +15,6 @@
         <mapper resource="com/teldrasill/mybatis/UserMapper.xml"></mapper>
         <mapper resource="com/teldrasill/mybatis/IndexMapper.xml"></mapper>
         <mapper resource="com/teldrasill/mybatis/OrderMapper.xml"></mapper>
+        <mapper resource="com/teldrasill/mybatis/GoodsTypeMapper.xml"></mapper>
     </mappers>
 </configuration>

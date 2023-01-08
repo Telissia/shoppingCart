@@ -1,6 +1,7 @@
 package com.teldrasill.service;
 
 import com.teldrasill.dao.GoodsDao;
+import com.teldrasill.dao.GoodsTypeDao;
 import com.teldrasill.pojo.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class GoodsServiceImpl implements GoodsService
 {
     @Autowired
     private GoodsDao goodsDao;
+    @Autowired
+    private GoodsTypeDao goodsTypeDao;
 
     public GoodsDao getGoodsMapper() {
         return goodsDao;
@@ -26,7 +29,8 @@ public class GoodsServiceImpl implements GoodsService
     }
 
     @Override
-    public int addGoods(Goods goods) {
+    public int addGoods(Goods goods)
+    {
         return goodsDao.addGoods(goods);
     }
 
@@ -41,7 +45,8 @@ public class GoodsServiceImpl implements GoodsService
     }
 
     @Override
-    public Goods queryGoodsById(Integer id) {
+    public Goods queryGoodsById(Integer id)
+    {
         return goodsDao.queryGoodsById(id);
     }
 
