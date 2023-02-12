@@ -83,7 +83,7 @@ public class GoodsController
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         goods.setGpicture(fileName);
 
-        String uploadDir = "/travel-logos/" + MyUtil.getStringID();
+        String uploadDir = "./travel-logos/" + MyUtil.getStringID();
 
         Path uploadPath = Paths.get(uploadDir);
 
