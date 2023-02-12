@@ -41,8 +41,10 @@
                         <td>
                             <c:if test="${goods.gpicture != '' }">
                                 <input type="hidden" name="id" value="${goods.id }"/>
+<%--                                <img alt="" width="300" height="250"
+                                     src="/Logos/${goods.gpicture}"/>--%>
                                 <img alt="" width="300" height="250"
-                                     src="/Logos/${goods.gpicture}"/>
+                                     src="${goods.picturePath}"/>
                             </c:if>
                         </td>
                         <td>

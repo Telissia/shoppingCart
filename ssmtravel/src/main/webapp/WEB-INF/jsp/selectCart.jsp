@@ -48,17 +48,17 @@
                 <tbody>
                 <c:forEach var="ce" items="${cartlist}">
                     <tr>
-                        <td>${ce.gname}</td>
-                        <td>${ce.grprice}</td>
-                        <td>${ce.shoppingnum }</td>
-                        <td>${ce.smallsum }</td>
+                        <td id="cgname">${ce.gname}</td>
+                        <td id="cgrprice">${ce.grprice}</td>
+                        <td id="cshoppingnum">${ce.shoppingnum }</td>
+                        <td id="csmallsum">${ce.smallsum }</td>
                         <td><a href="${pageContext.request.contextPath}/goods/selectAGoods?id=${ce.id }">GoodsDetails</a></td>
                         <td>
                             <form action="${pageContext.request.contextPath}/cart/deleteAgoods" method="post" name="updatecartform">
                                 <img src="${pageContext.request.contextPath }/static/images/cart-1.svg"  height="50" style="cursor: pointer" onclick="testNumber()">
 
-                                <input type="hidden" name="id" value="${ce.id }"/>
-                                <input type="hidden" name="shoppingnum" value="${ce.shoppingnum }">
+                                <input type="hidden" name="id" id="cid"value="${ce.id }"/>
+<%--                                <input type="hidden" name="shoppingnum" id="chshoppingnum" value="${ce.shoppingnum }">--%>
 
                                 <input type="number" name="reshoppingnum" id="IRS">
 

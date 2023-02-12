@@ -34,11 +34,14 @@ public class UserController
     public String login(@ModelAttribute Buser buser, Model model, HttpSession session) {
         Buser ruser = null;
         buser.setBpwd(DigestUtil.sha256Hex(buser.getBpwd()));
-        List<Buser> list = userService.login(buser, model, session);
+//        List<Buser> list = userService.login(buser, model, session);
+       List<Buser> list = userService.login(buser);
+       //用户存在时
         if(list.size() > 0)
         {
             ruser = list.get(0);
         }
+        //用户不存在时
         if(ruser != null)
         {
             session.setAttribute("bruser", ruser);

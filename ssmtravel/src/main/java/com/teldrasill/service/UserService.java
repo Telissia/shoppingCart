@@ -9,5 +9,5 @@ import java.util.List;
 public interface UserService
 {
     public int register(Buser buser);
-    public List<Buser> login(Buser buser, Model model, HttpSession session);
+    public List<Buser> login(Buser buser);
 }

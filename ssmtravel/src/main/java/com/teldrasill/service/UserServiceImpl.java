@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public List<Buser> login(Buser buser, Model model, HttpSession session)
+    public List<Buser> login(Buser buser)
     {
         List<Buser> list = userDao.login(buser);
         return list;

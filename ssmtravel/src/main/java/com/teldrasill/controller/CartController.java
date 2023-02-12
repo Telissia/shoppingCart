@@ -1,11 +1,13 @@
 package com.teldrasill.controller;
 
 import com.teldrasill.pojo.Buser;
+import com.teldrasill.pojo.Cart;
 import com.teldrasill.pojo.Goods;
 import com.teldrasill.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -41,7 +43,8 @@ public class CartController extends BaseUserController
         map.put("uid", ruser.getId());
         map.put("gid", id);
         map.put("shoppingnum", shoppingnum);
-        return cartService.putCart(map);
+//        return cartService.putCart(map);
+        return "";
     }
 
     //删除购物车
@@ -68,5 +71,12 @@ public class CartController extends BaseUserController
         model.addAttribute("total", sum);
         model.addAttribute("cartlist", list);
         return "orderconfirm";
+    }
+
+    @PostMapping("/putWholeCart")
+    public String putWholeCart(Model model, Cart cart, HttpSession session)
+    {
+        cartService.putCart(model,cart,session);
+        return "selectCart";
     }
 }

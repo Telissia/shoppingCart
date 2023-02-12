@@ -2,6 +2,7 @@ package com.teldrasill.service;
 
 import com.teldrasill.dao.CartDao;
 import com.teldrasill.pojo.Buser;
+import com.teldrasill.pojo.Cart;
 import com.teldrasill.pojo.Goods;
 import com.teldrasill.util.MyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,15 +37,28 @@ public class CartServiceImpl implements CartService
     }
 
     @Override
-    public String putCart(Map<String, Object> map)
+    public String putCart(Model model, Cart cart, HttpSession session)
     {
-        //是否已添加购物车
-        List<Map<String, Object>> list = cartDao.isPutCart(map);
-        if(list.size() > 0)
-             cartDao.updateCart(map);
-        else
-             cartDao.putCart(map);
-        return "redirect:/cart/selectCart";
+//        //是否已添加购物车
+//        List<Map<String, Object>> list = cartDao.isPutCart(map);
+//        if(list.size() > 0)
+//             cartDao.updateCart(map);
+//        else
+//             cartDao.putCart(map);
+//        return "redirect:/cart/selectCart";
+        Buser ruser = (Buser)session.getAttribute("bruser");
+        List<Map<String, Integer>> goodsList = cart.getGoodsList();
+        for(Map<String, Integer> goodsMap : goodsList)
+        {
+            int gid = goodsMap.get("gid");
+            int shoppingnum = goodsMap.get("shoppingnum");
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("uid", ruser.getId());
+            map.put("gid", gid);
+            map.put("shoppingnum", shoppingnum);
+            cartDao.putCart(map);
+        }
+        return "";
     }
 
     @Override

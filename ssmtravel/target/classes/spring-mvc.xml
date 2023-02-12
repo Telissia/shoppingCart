@@ -14,8 +14,9 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
           p:defaultEncoding="UTF-8"
           p:maxUploadSize="5400000"
-          p:uploadTempDir="fileUpload/temp"
-    >
+          >
+<!--          p:uploadTempDir="fileUpload/temp"-->
+
         <!--D:\spring mvc workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\fileUpload  -->
     </bean>
     <!-- 注解驱动 -->
@@ -36,4 +37,7 @@
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
+
+<!--    &lt;!&ndash; 配置根视图 &ndash;&gt;-->
+<!--    <mvc:view-controller path="/" view-name="index"/>-->
 </beans>

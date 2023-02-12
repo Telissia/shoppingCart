@@ -2,15 +2,26 @@ package com.teldrasill.controller;
 
 import com.teldrasill.pojo.Goods;
 import com.teldrasill.service.GoodsService;
+import com.teldrasill.service.GoodsTypeService;
 import com.teldrasill.util.MyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +34,10 @@ public class GoodsController
     @Autowired
     private GoodsService goodsService;
 
+    @Autowired
+    private GoodsTypeService goodsTypeService;
+
+    //查询商品列表
     @RequestMapping("/allGoods")
     public String list(Model model,Integer pageCur)
     {
@@ -54,17 +69,41 @@ public class GoodsController
     }
     //跳转添加商品页面
     @RequestMapping("/toAddGoods")
-    public String toAddGoods()
+    public String toAddGoods(Model model)
     {
+//        model.addAttribute("goods",new Goods());
+        model.addAttribute("goodsType",goodsTypeService.queryAllGoodsType());
         return "addGoods";
     }
 
     //添加商品的请求
-    @RequestMapping("/addGoods")
-    public String AddGoods(Goods goods, Model model, HttpServletRequest request) throws IOException
+    @PostMapping("/addGoods")
+    public String AddGoods(Goods goods, Model model, HttpServletRequest request, @RequestParam("logoImage") MultipartFile multipartFile) throws IOException
     {
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        goods.setGpicture(fileName);
 
-        //防止文件产生重复，错误覆盖
+        String uploadDir = "/travel-logos/" + MyUtil.getStringID();
+
+        Path uploadPath = Paths.get(uploadDir);
+
+        if(!Files.exists(uploadPath))
+        {
+            Files.createDirectories(uploadPath);
+        }
+
+        try(InputStream inputStream = multipartFile.getInputStream())
+        {
+            Path filePath = uploadPath.resolve(fileName);
+            System.out.println(filePath.toFile().getAbsolutePath());
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (IOException e)
+        {
+            throw new IOException("Could not save upload file: " + fileName);
+        }
+
+        /*//防止文件产生重复，错误覆盖
         //文件新名
         String newfileName = "";
         //得到上传原本文件名
@@ -94,7 +133,7 @@ public class GoodsController
             }
         }
 
-        System.out.println("addgoods>=" + goods);
+        System.out.println("addgoods>=" + goods);*/
         goodsService.addGoods(goods);
         return "redirect:/goods/allGoods";
         //请求复用，重定向请求到allGoods
@@ -103,6 +142,7 @@ public class GoodsController
     @RequestMapping("/selectAGoods")
     public String selectAGoods(Model model, Integer id){
         Goods goods = goodsService.queryGoodsById(id);
+        model.addAttribute("goodsType",goodsTypeService.queryAllGoodsType());
         model.addAttribute("goods",goods);
         return "goodsDetail";
     }

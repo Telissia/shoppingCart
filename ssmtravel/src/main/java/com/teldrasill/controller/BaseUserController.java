@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class BaseUserController
 {
+    //验证用户是否登录
     @ModelAttribute
     public void isLogin(HttpSession session, HttpServletRequest request) throws UserLoginException
     {

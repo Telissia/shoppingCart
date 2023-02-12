@@ -7,7 +7,7 @@
     <title>Goods List</title>
 
     <meta name="Keywords" content="">
-    <script src="${pageContext.request.contextPath }/static/js/Management/cart.js" ></script>
+    <script src="${pageContext.request.contextPath }/static/js/Management/cartStorage.js" ></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath }/static/bootstrap-4.6.1-dist/css/bootstrap.min.css">
     <script type="text/javascript">
         function goCart()
@@ -28,6 +28,7 @@
         }
         function postCart()
         {
+
             var xhr = new XMLHttpRequest();
             var url = "url";
             var tableId = document.getElementById("tab");
@@ -44,8 +45,8 @@
                 var content1 = tableId.rows[i].ceil(1).innerHTML;
                 var content2 = tableId.rows[i].ceil(2).innerHTML;
                 var data = JSON.stringify({"Goods_Name": content1, "Goods_Price": content2});
-                xhr.send(data);
             }
+            xhr.send(data);
         }
     </script>
 
@@ -75,7 +76,7 @@
             <div class="col-md-8 flex-column">
                 <h1>
                     <small>Query Cart
-                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/cart/selectCart" target="_blank">Query Cart</a>
+                        <a class="btn btn-primary" href="selectCart.jsp" target="_blank">Query Cart</a>
                     </small>
                 </h1>
             </div>

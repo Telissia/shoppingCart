@@ -3,13 +3,15 @@ package com.teldrasill.pojo;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.beans.Transient;
+
 public class Goods
 {
     private int id;
     private String gname;
     private int goodstype_id;
     private String gpicture;
-    private CommonsMultipartFile logoImage;//用于保存用户上传的图片
+//    private CommonsMultipartFile logoImage;//用于保存用户上传的图片
     private double grprice;
     private double goprice;
     private int gstore;
@@ -23,13 +25,13 @@ public class Goods
         this.typename = typename;
     }
 
-    public CommonsMultipartFile getLogoImage() {
+/*    public CommonsMultipartFile getLogoImage() {
         return logoImage;
     }
 
     public void setLogoImage(CommonsMultipartFile logoImage) {
         this.logoImage = logoImage;
-    }
+    }*/
 
     public int getId() {
         return id;
@@ -86,4 +88,16 @@ public class Goods
     public void setGstore(int gstore) {
         this.gstore = gstore;
     }
+
+    @Transient
+    public String getPicturePath()
+    {
+        if(gpicture == null  || id == 0)
+        {
+            return null;
+        }
+        return "D:/Download/jsp/apache-tomcat-9.0.14-windows-x64/apache-tomcat-9.0.14/bin/./travel-logos/" + id + "/" + gpicture;
+    }
+
+
 }
